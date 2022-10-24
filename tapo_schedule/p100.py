@@ -2,7 +2,7 @@
 
 import logging
 
-from PyP100._base import TapoBase
+from tapo_schedule._base import TapoBase
 
 LOGGER = logging.getLogger(__name__)
 

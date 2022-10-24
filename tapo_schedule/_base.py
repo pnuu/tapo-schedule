@@ -7,8 +7,10 @@ import time
 import uuid
 from base64 import b64decode
 
-from PyP100.utils import get_response_with_retries, get_set_device_info_payload
 from requests import Session
+
+from tapo_schedule.utils import (get_response_with_retries,
+                                 get_set_device_info_payload)
 
 ERROR_CODES = {
     "0": "Success",

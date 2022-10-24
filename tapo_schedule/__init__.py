@@ -1,4 +1,4 @@
-"""Package for TP-Link Tapo devices."""
+"""Package for scheduling and controlling TP-Link Tapo devices."""
 
 import ast
 import hashlib
@@ -8,12 +8,13 @@ from base64 import b64decode, b64encode
 
 from Crypto.Cipher import PKCS1_v1_5
 from Crypto.PublicKey import RSA
-from PyP100 import tp_link_cipher
-from PyP100._base import ERROR_CODES, TapoCommunication
-from PyP100.l530 import L530
-from PyP100.p100 import P100
-from PyP100.p110 import P110
-from PyP100.utils import get_response_with_retries
+
+from tapo_schedule import tp_link_cipher
+from tapo_schedule._base import ERROR_CODES, TapoCommunication
+from tapo_schedule.l530 import L530
+from tapo_schedule.p100 import P100
+from tapo_schedule.p110 import P110
+from tapo_schedule.utils import get_response_with_retries
 
 COOKIE_NAME = "TP_SESSIONID"
 DEVICES = {

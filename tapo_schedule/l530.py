@@ -2,8 +2,8 @@
 
 import logging
 
-from PyP100._base import TapoBase
-from PyP100.utils import get_set_device_info_payload
+from tapo_schedule._base import TapoBase
+from tapo_schedule.utils import get_set_device_info_payload
 
 LOGGER = logging.getLogger(__name__)
 
