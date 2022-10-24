@@ -8,7 +8,7 @@ The device control portion of the package is a rewrite of [PyP100](https://githu
 
 ## Installation
 
-> **_NOTE:__**  The package will be available in PyPI in due time
+> **_NOTE:_**  The package will be available in PyPI in due time
 
 ```bash
 pip install https://github.com/pnuu/tapo-schedule.git
