@@ -1,0 +1,21 @@
+user:
+password:
+ip_address:
+
+schedule:
+  - method: set_hsv
+    delay: 5
+    values:
+    - [0, 100, 1]
+  - method: set_color_temperature
+    delay: 0
+    values:
+    - [2500]
+  - method: set_brightness
+    delay: 9
+    values:
+      range: [1, 101, 10]
+  - method: set_color_temperature
+    delay: 1
+    values:
+      range: [2500, 5000, 100]
