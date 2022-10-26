@@ -20,11 +20,8 @@ class L530(TapoBase):
         payload = self._get_secure_payload(
             get_set_device_info_payload(self._terminal_uuid, params={"brightness": brightness})
         )
-
-        try:
-            response = self._get_response(f"http://{self.ip_address}/app?token={self._token}", payload)
-        finally:
-            self._log_errors(response)
+        response = self._get_decoded_response(f"http://{self.ip_address}/app?token={self._token}", payload)
+        self._log_response(response, "set_brightness()")
 
     def set_color_temperature(self, colortemp):
         """Set color temperature of white light.
@@ -35,11 +32,8 @@ class L530(TapoBase):
         payload = self._get_secure_payload(
             get_set_device_info_payload(self._terminal_uuid, params={"color_temp": colortemp})
         )
-
-        try:
-            response = self._get_response(f"http://{self.ip_address}/app?token={self._token}", payload)
-        finally:
-            self._log_errors(response)
+        response = self._get_decoded_response(f"http://{self.ip_address}/app?token={self._token}", payload)
+        self._log_response(response, "set_color_temperature()")
 
     def set_hsv(self, hue, saturation, value):
         """Set hue, saturation and value.
@@ -59,11 +53,8 @@ class L530(TapoBase):
                     "saturation": saturation,
                     "brightness": value})
         )
-
-        try:
-            response = self._get_response(f"http://{self.ip_address}/app?token={self._token}", payload)
-        finally:
-            self._log_errors(response)
+        response = self._get_decoded_response(f"http://{self.ip_address}/app?token={self._token}", payload)
+        self._log_response(response, "set_hsv()")
 
     def set_rgb(self, red, green, blue):
         """Set RGB colors.

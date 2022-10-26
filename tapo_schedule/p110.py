@@ -17,12 +17,8 @@ class P110(TapoBase):
         payload = self._get_secure_payload(
             _get_energy_usage_payload()
         )
-        LOGGER.debug("getEnergyUsage %s", self.ip_address)
-
-        try:
-            response = self._get_response(f"http://{self.ip_address}/app?token={self._token}", payload)
-        finally:
-            self._log_errors(response)
+        response = self._get_decoded_response(f"http://{self.ip_address}/app?token={self._token}", payload)
+        self._log_response(response, "get_energy_usage()")
 
         return json.loads(response)
 
