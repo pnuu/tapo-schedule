@@ -61,6 +61,8 @@ def _get_values(itm):
     values = itm.get('values')
     if isinstance(values, dict):
         values = range(*values['range'])
+    if values is None:
+        values = [values]
     return values
 
 
