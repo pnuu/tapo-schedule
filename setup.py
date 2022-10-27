@@ -17,6 +17,7 @@ setup_args = dict(
     author_email='pnuu+git@iki.fi',
     keywords=['Tapo', 'TP-Link', 'scheduling'],
     url='https://github.com/pnuu/tapo-schedule',
+    scripts=['bin/run_schedule.py', ]
     # download_url='https://pypi.org/project/tapo-schedule/'
 )
 
