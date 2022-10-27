@@ -10,6 +10,9 @@ from tapo_schedule import Tapo
 
 LOGGER = logging.getLogger(__name__)
 
+MAX_RETRIES = 5
+RETRY_SLEEP = 1
+
 
 class Schedule:
     """Run schedule for Tapo devices."""
@@ -22,12 +25,13 @@ class Schedule:
         self._ip = config['ip_address']
         self._schedule = config['schedule']
         self.device = None
+        self._retry = 0
         self._initialize_device()
 
     def _initialize_device(self):
         self.device = Tapo(self._ip, self._user, self._password).get_device()
 
-    def _run_command(self, method, value, is_retry=False):
+    def _run_command(self, method, value):
         try:
             if isinstance(value, list):
                 method(*value)
@@ -36,11 +40,13 @@ class Schedule:
             else:
                 method()
         except (KeyError, ConnectTimeout, ReadTimeout, RequestException):
-            if not is_retry:
+            if self._retry < MAX_RETRIES:
                 LOGGER.error("Connection problem, reconnecting")
-                time.sleep(1)
+                time.sleep(RETRY_SLEEP)
                 self._initialize_device()
+                self._retry += 1
                 self._run_command(method, value, is_retry=True)
+        self._retry = 0
 
     def run(self):
         """Process the schedule."""
