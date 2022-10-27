@@ -21,7 +21,8 @@ The schedules can be defined in a YAML file, and processed using the included sc
 run_schedule L530_schedule.yaml
 ```
 
-Below is an example configuration for L530E lamp (included in `examples/` directory):
+Below is an example configuration for L530E lamp (included in `examples/` directory).
+The available commands are shown in the later sections.
 
 ```yaml
 user: place-tapo-username-here
