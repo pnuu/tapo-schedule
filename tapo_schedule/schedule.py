@@ -4,7 +4,7 @@ import logging
 import time
 
 import yaml
-from requests.exceptions import ReadTimeout, RequestException
+from requests.exceptions import ConnectTimeout, ReadTimeout, RequestException
 
 from tapo_schedule import Tapo
 
@@ -35,9 +35,10 @@ class Schedule:
                 method(value)
             else:
                 method()
-        except (KeyError, ReadTimeout, RequestException):
+        except (KeyError, ConnectTimeout, ReadTimeout, RequestException):
             if not is_retry:
                 LOGGER.error("Connection problem, reconnecting")
+                time.sleep(1)
                 self._initialize_device()
                 self._run_command(method, value, is_retry=True)
 
