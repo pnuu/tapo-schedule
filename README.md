@@ -4,8 +4,6 @@ and scheduling their operation.
 
 The device control portion of the package is a rewrite of [PyP100](https://github.com/fishbigger/TapoP100) library.
 
-> **_NOTE:_**  The library is still a work in progress. The device controls work, but the scheduling is still missing
-
 ## Installation
 
 > **_NOTE:_**  The package will be available in PyPI in due time
@@ -17,7 +15,43 @@ pip install https://github.com/pnuu/tapo-schedule.git
 ## Usage
 
 ### Schedules
-Todo
+The schedules can be defined in a YAML file, and processed using the included script:
+
+```bash
+run_schedule L530_schedule.yaml
+```
+
+Below is an example configuration for L530E lamp (included in `examples/` directory):
+
+```yaml
+user: place-tapo-username-here
+password: place-tapo-password-here
+ip_address: place-lamp-IP-address-here
+
+schedule:
+    # Set HSV color to (0, 100, 1) (red) and wait 5 seconds
+  - method: set_hsv
+    delay: 5
+    values:
+      # Hue, Saturation, Value
+    - [0, 100, 1]
+  # Set color temperature to 2500 Kelvin (warm white). No delay.
+  - method: set_color_temperature
+    delay: 0
+    values:
+    - [2500]
+  # Change brightness from 1 % to 100 % in 10 %-unit steps, wait 9 seconds between each step
+  - method: set_brightness
+    delay: 9
+    values:
+      # The values are passed to Python range() function, so the end value is exclusive
+      range: [1, 101, 10]
+  # Change color temperature from warm white (2500 Kelvin) to pure white (5000 K) in 100 K steps
+  - method: set_color_temperature
+    delay: 1
+    values:
+      range: [2500, 5100, 100]
+```
 
 ### Device initialization.
 Any supported device can be initialized using the ``Tapo`` utility class.
