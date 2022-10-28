@@ -31,8 +31,13 @@ class Schedule:
     def _initialize_device(self):
         self.device = Tapo(self._ip, self._user, self._password).get_device()
 
-    def _run_command(self, method, value):
+    def _run_command(self, method, value, reconnect=False):
         try:
+            if reconnect:
+                LOGGER.error("Connection problem, reconnecting")
+                time.sleep(RETRY_SLEEP)
+                self._initialize_device()
+                self._retry += 1
             if isinstance(value, list):
                 method(*value)
             elif isinstance(value, int):
@@ -41,11 +46,7 @@ class Schedule:
                 method()
         except (KeyError, ConnectTimeout, ReadTimeout, RequestException):
             if self._retry < MAX_RETRIES:
-                LOGGER.error("Connection problem, reconnecting")
-                time.sleep(RETRY_SLEEP)
-                self._initialize_device()
-                self._retry += 1
-                self._run_command(method, value, is_retry=True)
+                self._run_command(method, value, reconnect=True)
         self._retry = 0
 
     def run(self):
