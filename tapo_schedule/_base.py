@@ -116,22 +116,31 @@ class TapoBase(TapoCommunication):
     def __init__(self, ip_address, email, password):
         """Initialize the class."""
         super().__init__(ip_address, email, password)
+        self._power_on = None
 
     def turn_on(self):
         """Power on the device."""
+        if self._power_on is None:
+            self._power_on = self.get_device_info()['result']['device_on']
+        if self._power_on:
+            return
         payload = self._get_secure_payload(
             get_set_device_info_payload(self._terminal_uuid, params={"device_on": True})
         )
         response = self._get_decoded_response(f"http://{self.ip_address}/app?token={self._token}", payload)
         self._log_response(response, "turn_on()")
+        self._power_on = True
 
     def turn_off(self):
         """Power off the device."""
+        if self._power_on is False:
+            return
         payload = self._get_secure_payload(
             get_set_device_info_payload(self._terminal_uuid, params={"device_on": False})
         )
         response = self._get_decoded_response(f"http://{self.ip_address}/app?token={self._token}", payload)
         self._log_response(response, "turn_off()")
+        self._power_on = False
 
     def toggle_power(self):
         """Toggle device on/off."""
