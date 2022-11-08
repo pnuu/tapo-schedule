@@ -43,12 +43,11 @@ class L530(TapoBase):
         - saturation: 0 to 100 %
         - value: 0 to 100 %
         """
-        self.set_color_temperature(0)
-        self.turn_on()
         payload = self._get_secure_payload(
             get_set_device_info_payload(
                 self._terminal_uuid,
                 params={
+                    "color_temp": 0,
                     "hue": hue,
                     "saturation": saturation,
                     "brightness": value})
